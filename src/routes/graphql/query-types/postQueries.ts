@@ -12,8 +12,8 @@ export const postsQuery = {
 export const postQuery = {
   type: Post,
   args: {
-      id: { type: new GraphQLNonNull(UUIDType) },
+    id: { type: new GraphQLNonNull(UUIDType) },
   },
   resolve: async (_, args: { id: string }, context: Context) =>
     await context.prisma.post.findUnique({ where: { id: args.id } }),
-}; 
+};
