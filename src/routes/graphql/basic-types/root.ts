@@ -3,6 +3,11 @@ import { memberTypeQuery, memberTypesQuery } from '../query-types/memberTypeQuer
 import { postQuery, postsQuery } from '../query-types/postQueries.js';
 import { profileQuery, profilesQuery } from '../query-types/profileQueries.js';
 import { userQuery, usersQuery } from '../query-types/userQueries.js';
+import {
+  changeUserMutation,
+  createUserMutation,
+  deleteUserMutation,
+} from '../mutation-types/userMutations.js';
 
 export const rootQueryType = new GraphQLObjectType({
   name: 'Query',
@@ -15,5 +20,14 @@ export const rootQueryType = new GraphQLObjectType({
     profile: profileQuery,
     users: usersQuery,
     user: userQuery,
+  },
+});
+
+export const rootMutationType = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    createUser: createUserMutation,
+    changeUser: changeUserMutation,
+    deleteUser: deleteUserMutation,
   },
 });
