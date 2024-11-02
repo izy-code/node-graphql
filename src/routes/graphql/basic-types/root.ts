@@ -18,6 +18,10 @@ import {
   createProfileMutation,
   deleteProfileMutation,
 } from '../mutation-types/profileMutations.js';
+import {
+  subscribeToMutation,
+  unsubscribeFromMutation,
+} from '../mutation-types/subscribeMutations.js';
 
 export const rootQueryType = new GraphQLObjectType({
   name: 'Query',
@@ -45,5 +49,7 @@ export const rootMutationType = new GraphQLObjectType({
     createProfile: createProfileMutation,
     changeProfile: changeProfileMutation,
     deleteProfile: deleteProfileMutation,
+    subscribeTo: subscribeToMutation,
+    unsubscribeFrom: unsubscribeFromMutation,
   },
 });
