@@ -11,7 +11,7 @@ export const createPostMutation = {
     dto: { type: new GraphQLNonNull(CreatePostInput) },
   },
   resolve: async (_, args: { dto: CreatePostDto }, context: Context) =>
-    context.prisma.post.create({ data: args.dto }),
+    await context.prisma.post.create({ data: args.dto }),
 };
 
 export const changePostMutation = {
@@ -21,7 +21,7 @@ export const changePostMutation = {
     dto: { type: new GraphQLNonNull(ChangePostInput) },
   },
   resolve: async (_, args: { id: string; dto: ChangePostDto }, context: Context) =>
-    context.prisma.post.update({ where: { id: args.id }, data: args.dto }),
+    await context.prisma.post.update({ where: { id: args.id }, data: args.dto }),
 };
 
 export const deletePostMutation = {
