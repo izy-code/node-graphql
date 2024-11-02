@@ -1,4 +1,4 @@
-import { GraphQLBoolean, GraphQLNonNull } from 'graphql';
+import { GraphQLNonNull, GraphQLString } from 'graphql';
 import { User } from '../basic-types/user.js';
 import { Context } from '../basic-types/context.js';
 import { ChangeUserInput, CreateUserInput } from '../input-types/userInputs.js';
@@ -25,10 +25,17 @@ export const changeUserMutation = {
 };
 
 export const deleteUserMutation = {
-  type: GraphQLBoolean,
+  type: GraphQLString,
   args: {
     id: { type: new GraphQLNonNull(UUIDType) },
   },
-  resolve: async (_, args: { id: string }, context: Context) =>
-    !!(await context.prisma.user.delete({ where: { id: args.id } })),
+  resolve: async (_, args: { id: string }, context: Context) => {
+    try {
+      await context.prisma.user.delete({ where: { id: args.id } });
+
+      return 'User deleted successfully';
+    } catch (error) {
+      return "Could not delete user, possibly it doesn't exist";
+    }
+  },
 };
