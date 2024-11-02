@@ -8,6 +8,11 @@ import {
   createUserMutation,
   deleteUserMutation,
 } from '../mutation-types/userMutations.js';
+import {
+  changePostMutation,
+  createPostMutation,
+  deletePostMutation,
+} from '../mutation-types/postMutations.js';
 
 export const rootQueryType = new GraphQLObjectType({
   name: 'Query',
@@ -29,5 +34,8 @@ export const rootMutationType = new GraphQLObjectType({
     createUser: createUserMutation,
     changeUser: changeUserMutation,
     deleteUser: deleteUserMutation,
+    createPost: createPostMutation,
+    changePost: changePostMutation,
+    deletePost: deletePostMutation,
   },
 });
