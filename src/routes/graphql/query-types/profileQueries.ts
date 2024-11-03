@@ -15,5 +15,5 @@ export const profileQuery = {
     id: { type: new GraphQLNonNull(UUIDType) },
   },
   resolve: async (_, args: { id: string }, context: Context) =>
-    await context.prisma.profile.findUnique({ where: { id: args.id } }),
+    await context.dataLoaders.profileById.load(args.id),
 };

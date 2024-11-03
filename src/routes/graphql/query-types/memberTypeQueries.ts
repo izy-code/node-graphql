@@ -16,5 +16,5 @@ export const memberTypeQuery = {
     id: { type: new GraphQLNonNull(MemberTypeIdType) },
   },
   resolve: async (_, args: { id: MemberTypeId }, context: Context) =>
-    await context.prisma.memberType.findUnique({ where: { id: args.id } }),
+    await context.dataLoaders.memberTypeById.load(args.id),
 };

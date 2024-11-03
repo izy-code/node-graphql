@@ -14,26 +14,22 @@ export const User: GraphQLObjectType = new GraphQLObjectType({
     profile: {
       type: Profile,
       resolve: async (user: { id: string }, _args, context: Context) =>
-        context.prisma.profile.findUnique({ where: { userId: user.id } }),
+        context.dataLoaders.profileByUserId.load(user.id),
     },
     posts: {
       type: NonNullListOfNonNull(Post),
       resolve: async (user: { id: string }, _args, context: Context) =>
-        context.prisma.post.findMany({ where: { authorId: user.id } }),
+        context.dataLoaders.postsByAuthorId.load(user.id),
     },
     userSubscribedTo: {
       type: NonNullListOfNonNull(User),
       resolve: async (user: { id: string }, _args, context: Context) =>
-        context.prisma.user.findMany({
-          where: { subscribedToUser: { some: { subscriberId: user.id } } },
-        }),
+        context.dataLoaders.userSubscribedToById.load(user.id),
     },
     subscribedToUser: {
       type: NonNullListOfNonNull(User),
       resolve: async (user: { id: string }, _args, context: Context) =>
-        context.prisma.user.findMany({
-          where: { userSubscribedTo: { some: { authorId: user.id } } },
-        }),
+        context.dataLoaders.subscribeToUserById.load(user.id),
     },
   }),
 });

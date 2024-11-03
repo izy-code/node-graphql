@@ -2,6 +2,7 @@ import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { createGqlResponseSchema, gqlResponseSchema, RootSchema } from './schemas.js';
 import { graphql, parse, validate } from 'graphql';
 import depthLimit from 'graphql-depth-limit';
+import { getDataLoaders } from './data-loaders/getDataLoaders.js';
 
 const MAX_DEPTH = 5;
 
@@ -28,11 +29,13 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         return { errors: validationResults };
       }
 
+      const dataLoaders = getDataLoaders(prisma);
+
       return await graphql({
         schema: RootSchema,
         source: query,
         variableValues: variables,
-        contextValue: { prisma },
+        contextValue: { prisma, dataLoaders },
       });
     },
   });

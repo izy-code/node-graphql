@@ -15,5 +15,5 @@ export const postQuery = {
     id: { type: new GraphQLNonNull(UUIDType) },
   },
   resolve: async (_, args: { id: string }, context: Context) =>
-    await context.prisma.post.findUnique({ where: { id: args.id } }),
+    await context.dataLoaders.postById.load(args.id),
 };
